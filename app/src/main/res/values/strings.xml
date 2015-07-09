@@ -15,4 +15,5 @@
     <string name="drawer_section_additional">Additional</string>
     <string name="drawer_messages">Messages</string>
     <string name="placeholder_username">Mike Smith</string>
+    <string name="placeholder_email">placeholder@email.com</string>
 </resources>

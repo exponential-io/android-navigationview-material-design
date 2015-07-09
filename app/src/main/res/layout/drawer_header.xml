@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_header_height"
-    android:background="?attr/colorPrimaryDark"
+    android:background="@drawable/drawer_background"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:padding="@dimen/drawer_header_padding"
+    android:paddingTop="@dimen/drawer_header_padding"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="@dimen/spacing_large"
+        android:background="@android:color/transparent"
+        android:elevation="4dp"
+        tools:src="@drawable/avatar"/>
+
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/email"
+        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginStart="@dimen/spacing_large"
         android:text="@string/placeholder_username"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:text="@string/placeholder_email"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
-</LinearLayout>
+</RelativeLayout>
