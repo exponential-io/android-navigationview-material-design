@@ -17,6 +17,8 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements MainFragment.Callbacks {
 
+    private final String CHECKED_MENU_ITEM_ID = "MainActivity.CHECKED_MENU_ITEM_ID";
+    private int checkedMenuItemId = 0;
     private DrawerLayout drawerLayout;
 
     @Override
@@ -26,9 +28,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
 
         if (findViewById(R.id.container) != null) {
 
-            // Guard against creating overlapping fragment instances if the activity is being
-            // restored from a previous state.
-            if (savedInstanceState == null) {
+            if (savedInstanceState != null) {
+                // Restore the previously checked NavigationView drawer MenuItem.
+                checkedMenuItemId = savedInstanceState.getInt(CHECKED_MENU_ITEM_ID);
+            } else {
+                // Guard against creating overlapping fragment instances if the activity is being
+                // restored from a previous state.
                 getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.container, MainFragment.newInstance("Placeholder"))
@@ -39,12 +44,21 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
-        // Check the Home menu item by default
         // Define an event listener via an anonymous class
         if (navigationView != null) {
             Menu navigationViewMenu = navigationView.getMenu();
-            MenuItem homeMenuItem = navigationViewMenu.findItem(R.id.nav_home);
-            homeMenuItem.setChecked(true);
+
+            if (checkedMenuItemId == 0) {
+                // Default: check the Home menu item.
+                MenuItem homeMenuItem = navigationViewMenu.findItem(R.id.nav_home);
+                homeMenuItem.setChecked(true);
+                checkedMenuItemId = homeMenuItem.getItemId();
+            } else {
+                // Check the previously checked menu item (i.e. the checked menu item from saved
+                // instance state).
+                MenuItem checkedMenuItem = navigationViewMenu.findItem(checkedMenuItemId);
+                checkedMenuItem.setChecked(true);
+            }
 
             navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -52,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // Set the selected menu item in the drawer to checked
                         menuItem.setChecked(true);
+                        checkedMenuItemId = menuItem.getItemId();
                         // Close the NavigationView drawer
                         drawerLayout.closeDrawers();
                         // Inform Android that we have handled the event
@@ -109,6 +124,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CHECKED_MENU_ITEM_ID, checkedMenuItemId);
+
+        // Call the super class so that it can save the view hierarchy state
+        super.onSaveInstanceState(outState);
     }
 
     @Override
