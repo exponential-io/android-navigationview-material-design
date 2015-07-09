@@ -1,4 +1,4 @@
-package io.exponential.materialdesignactionbar;
+package io.exponential.mdnavigationview;
 
 import android.app.Activity;
 import android.os.Bundle;

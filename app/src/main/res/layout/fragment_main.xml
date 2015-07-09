@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.exponential.materialdesignactionbar.MainFragment">
+    tools:context="io.exponential.mdnavigationview.MainFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
