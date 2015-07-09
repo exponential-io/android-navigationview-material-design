@@ -1,7 +1,9 @@
 package io.exponential.materialdesignactionbar;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,6 +14,35 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (findViewById(R.id.container) != null) {
+
+            // Return immediately if the activity is being restored from a previous state so that
+            // we avoid overlapping fragment instances.
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, MainFragment.newInstance("Placeholder"))
+                .commit();
+        }
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
