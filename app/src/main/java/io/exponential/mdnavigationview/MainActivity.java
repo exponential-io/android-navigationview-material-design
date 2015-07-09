@@ -1,6 +1,9 @@
 package io.exponential.mdnavigationview;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +13,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements MainFragment.Callbacks {
 
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,16 +22,34 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
 
         if (findViewById(R.id.container) != null) {
 
-            // Return immediately if the activity is being restored from a previous state so that
-            // we avoid overlapping fragment instances.
-            if (savedInstanceState != null) {
-                return;
+            // Guard against creating overlapping fragment instances if the activity is being
+            // restored from a previous state.
+            if (savedInstanceState == null) {
+                getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, MainFragment.newInstance("Placeholder"))
+                    .commit();
             }
+        }
 
-            getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.container, MainFragment.newInstance("Placeholder"))
-                .commit();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        // Define an event listener via an anonymous class
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // Set the selected menu item in the drawer to checked
+                        menuItem.setChecked(true);
+                        // Close the NavigationView drawer
+                        drawerLayout.closeDrawers();
+                        // Inform Android that we have handled the event
+                        return true;
+                    }
+                }
+            );
         }
     }
 
@@ -59,9 +82,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id) {
+            case android.R.id.home:
+                // Open the NavigationView drawer when the home icon is clicked
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.action_settings:
+                // TODO: Implement settings
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
