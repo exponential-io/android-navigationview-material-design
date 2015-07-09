@@ -14,4 +14,5 @@
     <string name="drawer_contracts">Contracts</string>
     <string name="drawer_section_additional">Additional</string>
     <string name="drawer_messages">Messages</string>
+    <string name="placeholder_username">Mike Smith</string>
 </resources>
