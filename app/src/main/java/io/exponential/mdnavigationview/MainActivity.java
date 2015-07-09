@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 
 public class MainActivity extends AppCompatActivity implements MainFragment.Callbacks {
@@ -51,6 +54,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
                 }
             );
         }
+
+        ImageView avatarImageView = (ImageView) findViewById(R.id.avatar);
+
+        Picasso
+            .with(this)
+            .load(R.drawable.avatar)
+            .into(avatarImageView);
     }
 
 
