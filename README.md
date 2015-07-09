@@ -1,4 +1,4 @@
-# android-navigationdrawer-material-design
+# Android NavigationView via Material Design Support Library
 
 Learn how to use the Material Design Support Library's NavigationView to create a drawer.
 
@@ -45,3 +45,8 @@ git remote -v
 - Select **Build**, click **Rebuild Project**.
 - Commit your changes to git.
 - Select **File**, click **Invalidate Caches / Restart...**.
+
+## Follow commit log
+
+You can now start to follow the steps to implement the NavigationDrawer via the git commit log. Begin with the commits that are prefixed with `drawer:`.
+
