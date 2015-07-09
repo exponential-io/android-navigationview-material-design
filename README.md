@@ -43,4 +43,5 @@ git remote -v
     - Change `app_name` to `Material Design NavigationView`.
 - Select **Build**, click **Clean**.
 - Select **Build**, click **Rebuild Project**.
+- Commit your changes to git.
 - Select **File**, click **Invalidate Caches / Restart...**.
